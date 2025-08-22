@@ -7,5 +7,5 @@ test('Verifica se Hello World está escrito corretamente', async () => {
 
 test('Verifica se Hello World está escrito corretamente2.0', async () => {
   const texto2 = 'Hello World';
-  await expect(texto2).toBe('Helo World');
+  await expect(texto2).toBe('Hello World');
 });
