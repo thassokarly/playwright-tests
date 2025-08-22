@@ -1,0 +1,3 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","17","Verifica se Hello World está escrito corretamente2.0","chromium","Fri Aug 22 14:13:52 BRT 2025","failed","Fri Aug 22 14:13:52 BRT 2025","","example.spec.ts","",""
+"","12","Verifica se Hello World está escrito corretamente","chromium","Fri Aug 22 14:13:52 BRT 2025","passed","Fri Aug 22 14:13:52 BRT 2025","","example.spec.ts","",""

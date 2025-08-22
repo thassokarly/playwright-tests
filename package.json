@@ -1,0 +1,19 @@
+{
+  "name": "teste",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "clean:allure": "powershell Remove-Item -Recurse -Force .\\allure-results\\*",
+    "test": "npm run clean:allure && npx playwright test",
+    "report": "allure generate allure-results --clean -o allure-report && allure open allure-report"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@playwright/test": "^1.55.0",
+    "@types/node": "^24.3.0",
+    "allure-playwright": "^3.3.3"
+  }
+}
