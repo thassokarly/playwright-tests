@@ -9,28 +9,23 @@ pipeline {
     stages {
         stage('Node.js Deps') {
             steps {
-                // Usamos npm ci para garantir uma instalação limpa no CI
                 sh 'npm ci'
             }
         }
 
         stage('Testes') {
             steps {
-                sh 'ls -la "./tests"'
-                // 1. Verificamos se estamos na pasta certa
-                sh 'pwd'
-                
-                // 2. Rodamos o comando apontando diretamente para a pasta de testes
-                // Usamos aspas duplas para evitar problemas com o espaço no nome "All Tests"
-                sh 'npx playwright test ./tests --reporter=list'
+                // Usamos aspas simples por fora e aspas duplas por dentro para o caminho com espaço
+                // Também adicionamos o comando 'DEBUG=pw:config' para ver se ele ignora o config
+                sh "npx playwright test --config=playwright.config.ts ./tests --reporter=list"
             }
         }
     }
 
     post {
         always {
-            // Garante que o relatório seja salvo
-            archiveArtifacts artifacts: 'playwright-report/**/*', allowEmptyArchive: true
+            // Se o Playwright não gerou o HTML, tentamos capturar o que houver
+            archiveArtifacts artifacts: '**/*.html, **/test-results/**', allowEmptyArchive: true
         }
     }
 }
