@@ -6,17 +6,37 @@ pipeline {
         }
     }
 
+    environment {
+        CI = 'true'
+    }
+
     stages {
-        stage('Node.js Deps') {
+
+        stage('Instalar dependências') {
             steps {
                 sh 'npm install'
             }
         }
 
-        stage('Testes') {
+        stage('Executar testes Playwright') {
             steps {
                 sh 'npx playwright test'
             }
+        }
+    }
+
+    post {
+        always {
+            echo '📄 Arquivando relatório do Playwright'
+            archiveArtifacts artifacts: 'playwright-report/**', fingerprint: true
+        }
+
+        success {
+            echo '✅ Todos os testes passaram'
+        }
+
+        failure {
+            echo '❌ Existem testes com falha'
         }
     }
 }
