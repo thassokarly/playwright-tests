@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker{
-            image: 'mcr.microsoft.com/playwright:v1.57.0-noble' //container dock
+            image 'mcr.microsoft.com/playwright:v1.57.0-noble' //container dock
             args '--network teste_skynet' //com essa rede
         }
     }
