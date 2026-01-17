@@ -16,8 +16,10 @@ pipeline {
 
         stage('Testes') {
             steps {
+                sh 'ls -la "./tests"'
                 // 1. Verificamos se estamos na pasta certa
                 sh 'pwd'
+                
                 // 2. Rodamos o comando apontando diretamente para a pasta de testes
                 // Usamos aspas duplas para evitar problemas com o espaço no nome "All Tests"
                 sh 'npx playwright test ./tests --reporter=list'
