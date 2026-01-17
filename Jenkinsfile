@@ -15,8 +15,9 @@ pipeline {
 
         stage('Testes') {
             steps {
-                sh 'npx playwright test'
+                sh 'npx playwright test --reporter=list'
             }
         }
+        
     }
 }
