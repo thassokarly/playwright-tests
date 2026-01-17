@@ -1,8 +1,8 @@
 pipeline {
     agent {
-        docker{
-            image 'mcr.microsoft.com/playwright:v1.57.0-noble' //container dock
-            args '--network teste_skynet' //com essa rede
+        docker {
+            image 'mcr.microsoft.com/playwright:v1.57.0-noble'
+            args '--network teste_skynet'
         }
     }
 
@@ -16,9 +16,18 @@ pipeline {
         stage('Testes') {
             steps {
                 sh 'npx playwright test'
-                allure includeProperties: false, jdk: '', resultPolicy: 'LEAVE_AS_IS', results: [[path: 'allure-results']]
             }
         }
-        
+    }
+
+    post {
+        always {
+            allure(
+                includeProperties: false,
+                jdk: '',
+                resultPolicy: 'ALWAYS',
+                results: [[path: 'allure-results']]
+            )
+        }
     }
 }
