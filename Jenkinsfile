@@ -9,21 +9,25 @@ pipeline {
     stages {
         stage('Node.js Deps') {
             steps {
-                sh 'npm install'
+                // Usamos npm ci para garantir uma instalação limpa no CI
+                sh 'npm ci'
             }
         }
 
         stage('Testes') {
             steps {
-                // ALTERAÇÃO AQUI: Adicionado --reporter=list para forçar a saída no log
-                sh 'npx playwright test --reporter=list'
+                // 1. Verificamos se estamos na pasta certa
+                sh 'pwd'
+                // 2. Rodamos o comando apontando diretamente para a pasta de testes
+                // Usamos aspas duplas para evitar problemas com o espaço no nome "All Tests"
+                sh 'npx playwright test ./tests --reporter=list'
             }
         }
     }
 
-    // ALTERAÇÃO AQUI: Salva o relatório HTML mesmo se os testes falharem
     post {
         always {
+            // Garante que o relatório seja salvo
             archiveArtifacts artifacts: 'playwright-report/**/*', allowEmptyArchive: true
         }
     }
