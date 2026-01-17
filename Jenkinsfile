@@ -25,18 +25,20 @@ pipeline {
         }
     }
 
-    post {
-        always {
-            echo '📄 Arquivando relatório do Playwright'
-            archiveArtifacts artifacts: 'playwright-report/**', fingerprint: true
-        }
-
-        success {
-            echo '✅ Todos os testes passaram'
-        }
-
-        failure {
-            echo '❌ Existem testes com falha'
-        }
+post {
+    always {
+        echo '📄 Arquivando relatório do Playwright'
+        archiveArtifacts artifacts: 'playwright-report/**',
+                         fingerprint: true,
+                         allowEmptyArchive: true
     }
+
+    success {
+        echo '✅ Todos os testes passaram'
+    }
+
+    failure {
+        echo '❌ Existem testes com falha'
+    }
+}
 }
