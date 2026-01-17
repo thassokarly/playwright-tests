@@ -1,6 +1,0 @@
-[
-  { "module": "Cadastro", "testName": "Campo nome obrigatório", "automated": true },
-  { "module": "Cadastro", "testName": "Campo nome deve ser string", "automated": false },
-  { "module": "Cadastro", "testName": "Campo nome limite de 50 caracteres", "automated": false },
-  { "module": "Cadastro", "testName": "Campo nome válido", "automated": true }
-]

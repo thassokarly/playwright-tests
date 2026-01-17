@@ -1,19 +1,20 @@
 {
   "name": "teste",
   "version": "1.0.0",
-  "main": "index.js",
   "scripts": {
-    "clean:allure": "powershell Remove-Item -Recurse -Force .\\allure-results\\*",
-    "test": "npm run clean:allure && npx playwright test",
-    "report": "allure generate allure-results --clean -o allure-report && allure open allure-report"
+    "test": "npx playwright test && echo \"\\n👉 Para ver o relatório Allure, execute: allure serve allure-results\""
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "devDependencies": {
     "@playwright/test": "^1.55.0",
-    "@types/node": "^24.3.0",
-    "allure-playwright": "^3.3.3"
+    "allure-commandline": "^2.34.1",
+    "allure-playwright": "^3.4.5",
+    "c8": "^10.1.3",
+    "rimraf": "^5.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "fs-extra": "^11.3.1",
+    "xml2js": "^0.6.2"
   }
 }
