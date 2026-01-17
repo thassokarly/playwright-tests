@@ -18,11 +18,5 @@ pipeline {
                 sh 'npx playwright test'
             }
         }
-        stage('Teste') {
-            steps {
-        // Adicionamos o --list para ver se ele reconhece os arquivos
-                sh 'npx playwright test --reporter=list'
-            }
-        }
-    }
+   }
 }
