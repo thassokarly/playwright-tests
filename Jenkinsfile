@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             image 'mcr.microsoft.com/playwright:v1.57.0-noble'
-            args '--network teste_skynet'
+            args '--network skynet'
         }
     }
 
@@ -17,17 +17,6 @@ pipeline {
             steps {
                 sh 'npx playwright test'
             }
-        }
-    }
-
-    post {
-        always {
-            allure(
-                includeProperties: false,
-                jdk: '',
-                resultPolicy: 'ALWAYS',
-                results: [[path: 'allure-results']]
-            )
         }
     }
 }
