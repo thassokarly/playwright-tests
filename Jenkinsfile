@@ -15,7 +15,8 @@ pipeline {
 
         stage('Testes') {
             steps {
-                sh 'npx playwright test --reporter=list'
+                sh 'npx playwright test'
+                allure includeProperties: false, jdk: '', resultPolicy: 'LEAVE_AS_IS', results: [[path: 'allure-results']]
             }
         }
         
