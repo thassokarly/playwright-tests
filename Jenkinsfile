@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Node.js Deps') {
             steps {
-                sh 'npm ci'
+                sh 'npm install'
             }
         }
 
@@ -17,7 +17,7 @@ pipeline {
             steps {
                 // Usamos aspas simples por fora e aspas duplas por dentro para o caminho com espaço
                 // Também adicionamos o comando 'DEBUG=pw:config' para ver se ele ignora o config
-                sh "npx playwright test --config=playwright.config.ts ./tests --reporter=list"
+                sh "npx playwright test"
             }
         }
     }
