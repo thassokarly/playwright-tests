@@ -5,9 +5,10 @@ pipeline {
             args '--network teste_skynet'
         }
     }
-    triggers {
-    cron('15 18 * * *')
+triggers {
+    cron('18 18 * * *')
 }
+
 
     stages {
         stage('Instalar dependências') {
