@@ -21,7 +21,7 @@ stage('Executar testes') {
         script {
             try {
                 // Executa os testes normalmente
-                sh 'npx playwright test --reporter=list'
+                sh 'npx playwright test'
                 currentBuild.result = 'SUCCESS' 
             } catch (err) {
                 echo "Testes falharam, mas forçando status para SUCCESS conforme solicitado."
