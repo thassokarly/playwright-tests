@@ -5,9 +5,9 @@ pipeline {
             args '--network teste_skynet'
         }
     }
-triggers {
-    cron('0 12 * * *')
-}
+    triggers {
+        cron('0 12 * * *') // ajusta conforme necessidade
+    }
 
     stages {
         stage('Instalar dependências') {
@@ -18,7 +18,13 @@ triggers {
 
         stage('Executar testes') {
             steps {
-                sh 'npx playwright test --reporter=list || true'
+                script {
+                    try {
+                        sh 'npx playwright test --reporter=list'
+                    } catch (err) {
+                        echo "Alguns testes falharam propositalmente, mas estamos ignorando a falha."
+                    }
+                }
                 allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
             }
         }
