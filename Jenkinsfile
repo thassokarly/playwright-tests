@@ -5,33 +5,34 @@ pipeline {
             args '--network teste_skynet'
         }
     }
+
     triggers {
-        cron('0 12 * * *') // ajusta conforme necessidade
+        cron('0 12 * * *')
     }
 
     stages {
         stage('Instalar dependências') {
             steps {
-                sh 'npm install'
+                sh 'npm ci' // ci é mais confiável que install em CI/CD
             }
         }
 
-stage('Executar testes') {
-    steps {
-        script {
-            try {
-                // Executa os testes normalmente
-                sh 'npx playwright test'
-                currentBuild.result = 'SUCCESS' 
-            } catch (err) {
-                echo "Testes falharam, mas forçando status para SUCCESS conforme solicitado."
-                // Força o resultado do build atual para Sucesso
-                currentBuild.result = 'SUCCESS'
+        stage('Executar testes') {
+            steps {
+                script {
+                    // Roda os testes e captura o código de saída
+                    def status = sh(script: 'npx playwright test --reporter=allure-playwright', returnStatus: true)
+                    echo "Código de saída do Playwright: ${status}"
+
+                    // Coleta os resultados do Allure mesmo que haja falha
+                    allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
+
+                    // Decide se o pipeline deve falhar
+                    if (status != 0) {
+                        error("Alguns testes falharam. Código de saída: ${status}")
+                    }
+                }
             }
         }
-        // O Allure continuará gerando o report com as falhas, mas o status do Job será verde
-        allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
-    }
-}
     }
 }
