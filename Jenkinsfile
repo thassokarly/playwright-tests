@@ -6,8 +6,9 @@ pipeline {
         }
     }
     triggers {
-    cron('0 18 * * *')
-    }
+    cron('15 18 * * *')
+}
+
     stages {
         stage('Instalar dependências') {
             steps {
