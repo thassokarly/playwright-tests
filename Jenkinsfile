@@ -40,7 +40,8 @@ pipeline {
                 
                 // Envia o e-mail
                 emailext (
-                    to: 'thassokmorais@gmail.com', // ALTERE AQUI
+                    from: 'thassokmorais@gmail.com',
+                    to: 'thassokmorais@gmail.com',
                     subject: "Relatório de Testes Playwright - Build #${env.BUILD_NUMBER} - ${currentBuild.currentResult}",
                     body: """
                         <html>
