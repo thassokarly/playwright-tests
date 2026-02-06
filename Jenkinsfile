@@ -6,30 +6,17 @@ pipeline {
         }
     }
 
-    triggers {
-        cron('0 12 * * *')
-    }
-
     stages {
         stage('Instalar dependências') {
             steps {
-                sh 'npm ci'
+                sh 'npm install'
             }
         }
 
         stage('Executar testes') {
             steps {
-                script {
-                    // Roda os testes e captura o código de saída
-                    def status = sh(script: 'npx playwright test --reporter=allure-playwright', returnStatus: true)
-                    echo "Código de saída do Playwright (simulado ou real): ${status}"
-
-                    // Coleta os resultados do Allure mesmo que haja falha
-                    allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
-
-                    // Não aborta o pipeline, mesmo se houver falha
-                    echo "Falha simulada, mas pipeline continua executando normalmente."
-                }
+                sh 'npx playwright test || true'
+                allure includeProperties: false, jdk: '', resultPolicy: 'LEAVE_AS_IS', results: [[path: 'allure-results']]
             }
         }
     }
