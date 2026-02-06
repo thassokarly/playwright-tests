@@ -18,7 +18,7 @@ triggers {
 
         stage('Executar testes') {
             steps {
-                sh 'npx playwright test || true'
+                sh 'npx playwright test --reporter=list || true'
                 allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
             }
         }
