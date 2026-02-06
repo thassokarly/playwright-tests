@@ -6,6 +6,10 @@ pipeline {
         }
     }
 
+    environment {
+        CI = 'true'
+    }
+
     stages {
         stage('Instalar dependências') {
             steps {
@@ -25,7 +29,7 @@ pipeline {
             archiveArtifacts artifacts: 'playwright-report/**, test-results/**', allowEmptyArchive: true
 
             publishHTML(target: [
-                allowMissing: false,
+                allowMissing: true,
                 alwaysLinkToLastBuild: true,
                 keepAll: true,
                 reportDir: 'playwright-report',
