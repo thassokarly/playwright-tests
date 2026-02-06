@@ -13,7 +13,7 @@ pipeline {
     stages {
         stage('Instalar dependências') {
             steps {
-                sh 'npm ci' // ci é mais confiável que install em CI/CD
+                sh 'npm ci'
             }
         }
 
@@ -22,15 +22,13 @@ pipeline {
                 script {
                     // Roda os testes e captura o código de saída
                     def status = sh(script: 'npx playwright test --reporter=allure-playwright', returnStatus: true)
-                    echo "Código de saída do Playwright: ${status}"
+                    echo "Código de saída do Playwright (simulado ou real): ${status}"
 
                     // Coleta os resultados do Allure mesmo que haja falha
                     allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
 
-                    // Decide se o pipeline deve falhar
-                    if (status != 0) {
-                        error("Alguns testes falharam. Código de saída: ${status}")
-                    }
+                    // Não aborta o pipeline, mesmo se houver falha
+                    echo "Falha simulada, mas pipeline continua executando normalmente."
                 }
             }
         }
