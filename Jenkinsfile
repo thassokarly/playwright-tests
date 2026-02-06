@@ -52,7 +52,7 @@ pipeline {
 
                 Relatório Allure em anexo.
                 """,
-                to: "SEUEMAIL@gmail.com",
+                to: "thassokmorais@gmail.com",
                 attachmentsPattern: "allure-report.zip"
             )
         }
