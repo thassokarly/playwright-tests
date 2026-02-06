@@ -1,13 +1,9 @@
 pipeline {
     agent {
         docker {
-            image 'mcr.microsoft.com/playwright:v1.57.0-noble'
+            image 'mcr.microsoft.com/playwright:v1.58.0-noble'
             args '--network teste_skynet'
         }
-    }
-
-    environment {
-        CI = 'true'
     }
 
     stages {
@@ -21,21 +17,6 @@ pipeline {
             steps {
                 sh 'npx playwright test'
             }
-        }
-    }
-
-    post {
-        always {
-            archiveArtifacts artifacts: 'playwright-report/**, test-results/**', allowEmptyArchive: true
-
-            publishHTML(target: [
-                allowMissing: true,
-                alwaysLinkToLastBuild: true,
-                keepAll: true,
-                reportDir: 'playwright-report',
-                reportFiles: 'index.html',
-                reportName: 'Playwright Report'
-            ])
         }
     }
 }
