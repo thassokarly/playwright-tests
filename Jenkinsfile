@@ -18,5 +18,10 @@ pipeline {
                 sh 'npx playwright test || true'
             }
         }
+        stage('Visão geral') {
+            steps {
+                sh 'npx playwright show-report'
+            }
+        }
     }
 }
