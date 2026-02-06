@@ -9,7 +9,6 @@ triggers {
     cron('0 12 * * *')
 }
 
-
     stages {
         stage('Instalar dependências') {
             steps {
@@ -20,7 +19,7 @@ triggers {
         stage('Executar testes') {
             steps {
                 sh 'npx playwright test || true'
-                allure includeProperties: false, jdk: '', resultPolicy: 'LEAVE_AS_IS', results: [[path: 'allure-results']]
+                allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
             }
         }
     }
