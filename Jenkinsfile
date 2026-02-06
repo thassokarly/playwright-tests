@@ -16,11 +16,7 @@ pipeline {
         stage('Executar testes') {
             steps {
                 sh 'npx playwright test || true'
-            }
-        }
-        stage('Visão geral') {
-            steps {
-                sh 'npx playwright show-report'
+                allure includeProperties: false, jdk: '', resultPolicy: 'LEAVE_AS_IS', results: [[path: 'allure-results']]
             }
         }
     }
