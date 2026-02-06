@@ -7,9 +7,8 @@ pipeline {
     }
 
     triggers {
-    cron('50 17 * * *')
+        cron('50 17 * * *')
     }
-
 
     stages {
         stage('Instalar dependências') {
@@ -18,7 +17,7 @@ pipeline {
             }
         }
 
-        // ❗️NÃO MEXER (como você pediu)
+        // ❗ NÃO MEXER
         stage('Executar testes') {
             steps {
                 sh 'npx playwright test || true'
@@ -28,32 +27,22 @@ pipeline {
                        results: [[path: 'allure-results']]
             }
         }
-
-        stage('Compactar relatório') {
-            steps {
-                sh 'zip -r allure-report.zip allure-report'
-            }
-        }
     }
 
+    // ✅ AQUI entra o post
     post {
         always {
             emailext(
-                subject: "Relatório Playwright - ${currentBuild.currentResult}",
+                subject: "Playwright - ${currentBuild.currentResult}",
                 body: """
                 Pipeline executado automaticamente.
 
                 Status: ${currentBuild.currentResult}
-                Job: ${JOB_NAME}
-                Build: ${BUILD_NUMBER}
 
-                Link do build:
-                ${BUILD_URL}
-
-                Relatório Allure em anexo.
+                Relatório Allure:
+                ${BUILD_URL}allure
                 """,
-                to: "thassokmorais@gmail.com",
-                attachmentsPattern: "allure-report.zip"
+                to: "thassokmorais@gmail.com"
             )
         }
     }
