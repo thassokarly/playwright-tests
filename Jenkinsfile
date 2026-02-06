@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'mcr.microsoft.com/playwright:v1.57.0-noble'
-            args '--network teste_skynet'
-        }
-    }
+    agent any
 
     stages {
         stage('Node.js Deps') {
