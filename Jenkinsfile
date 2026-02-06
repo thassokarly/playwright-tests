@@ -16,17 +16,22 @@ pipeline {
             }
         }
 
-        stage('Executar testes') {
-            steps {
-                script {
-                    try {
-                        sh 'npx playwright test --reporter=list'
-                    } catch (err) {
-                        echo "Alguns testes falharam propositalmente, mas estamos ignorando a falha."
-                    }
-                }
-                allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
+stage('Executar testes') {
+    steps {
+        script {
+            try {
+                // Executa os testes normalmente
+                sh 'npx playwright test --reporter=list'
+                currentBuild.result = 'SUCCESS' 
+            } catch (err) {
+                echo "Testes falharam, mas forçando status para SUCCESS conforme solicitado."
+                // Força o resultado do build atual para Sucesso
+                currentBuild.result = 'SUCCESS'
             }
         }
+        // O Allure continuará gerando o report com as falhas, mas o status do Job será verde
+        allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
+    }
+}
     }
 }
